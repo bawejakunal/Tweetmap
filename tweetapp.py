@@ -31,7 +31,7 @@ api = tweepy.API(auth)
 #status = "Testing times!"                  # This lets you post a status on your twitter timeline. Try it!
 #api.update_status(status=status)
 
-#public_tweets = api.home_timeline()       # this prints all the tweets on your timeline
+#public_tweets = api.home_timeline()       # this prints all the tweets on your timeline. Try it
 #for tweet in public_tweets:
  #   print tweet.text
 
