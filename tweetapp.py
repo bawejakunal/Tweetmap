@@ -9,10 +9,10 @@ import io
 
 #Peruse Read.me on how to obtain the security key and access token. This basically allows read/write operations to your twitter profile
 # through API using Python.
-consumer_key='lzwiLyivUX2yS0ZQHHwGjLBwJ'
-consumer_secret='rTyp7xLV7i8NagYJal5FF6DxYxd6I7yatu8xlv4w5FPAANDJ1z'
-access_token = '824965753-jb9i3FSKeuvC4bptwA7wHKBVRNZ78gaXhXqfYECf'
-access_token_secret= 'u2IwaTAdPQJsUQVRnLUgOumDudYpmjopIsvQGqMdN17Su'
+consumer_key=
+consumer_secret=
+access_token = 
+access_token_secret= 
 
 
 start_time=time.time() #Start time of listener, set to system time
