@@ -5,15 +5,29 @@ from tweepy.streaming import StreamListener
 import time
 import os
 import io
+import json
 
 
 #Peruse Read.me on how to obtain the security key and access token. This basically allows read/write operations to your twitter profile
 # through API using Python.
-consumer_key=
-consumer_secret=
-access_token = 
-access_token_secret= 
+consumer_key
+consumer_secret 
+access_token
+access_token_secret 
 
+def load_keys(filename):
+	with open(filename) as handle:
+		keys = json.load(handle)
+		twitter_keys = keys["twitter"]
+		consumer_key = twitter_keys["CONSUMER_KEY"]
+		consumer_secret = twitter_keys["CONSUMER_SECRET"]
+		access_token = twitter_keys["ACCESS_TOKEN"]
+		access_token_secret = twitter_keys["ACCESS_TOKEN_SECRET"]
+
+# load api keys
+load_keys("key.json")
+
+	
 
 start_time=time.time() #Start time of listener, set to system time
 
