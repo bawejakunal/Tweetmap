@@ -5,7 +5,6 @@
 import tweepy
 import json
 import time
-import urllib3
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
@@ -110,12 +109,12 @@ def main():
     stream_listener = StreamListener()
     try:
         streamer = tweepy.Stream(twitter_api.auth, listener=stream_listener)
-        streamer.filter(locations=[-180, -90, 180, 90], languages=['en'], async=True)
-    except urllib3.exceptions.ProtocolError as e:
-        print str(e)
-    except Exception, e:
+        streamer.filter(locations=[-180, -90, 180, 90], languages=['en'])
+    except Exception as e:
         print e
-
+        raise Exception(e)
+    # Ideally we should try catch exception here
+    # but we put a hack to throw outside program which is catched by our bash script to restart the script
 
 if __name__ == '__main__':
     main()
