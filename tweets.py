@@ -67,7 +67,7 @@ class StreamListener(tweepy.StreamListener):
                           doc_type="tweet", id=json_data['id'],
                           body=document)
 
-        except tweepy.TweepError:
+        except (KeyError, UnicodeDecodeError, Exception) as e:
             pass
 
     def on_error(self, status_code):
