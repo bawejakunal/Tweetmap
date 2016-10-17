@@ -36,10 +36,10 @@ awsauth = AWS4Auth(aws_creds['ACCESS_KEY'], aws_creds['SECRET_KEY'], "us-west-2"
 
 #elasticsearch client
 es = Elasticsearch(hosts=[{'host': ES_NODE, 'port': 443}],
-    http_auth=awsauth,
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection)
+                   http_auth=awsauth,
+                   use_ssl=True,
+                   verify_certs=True,
+                   connection_class=RequestsHttpConnection)
 
 
 class StreamListener(tweepy.StreamListener):
