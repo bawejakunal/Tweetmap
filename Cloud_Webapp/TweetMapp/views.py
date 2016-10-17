@@ -51,7 +51,7 @@ def wordsearch(request):
     tweets = dict()
     if request.GET['query'] == '':
         # query elasticsearch
-        result = es.search(index="tweetmap", size=500, body={"query": {"match_all": {}}})
+        result = es.search(index="tweetmap", size=10000, body={"query": {"match_all": {}}})
         for hit in result['hits']['hits']:
             location = hit['_source']['location']
             tweets[hit['_id']] = [location['lat'], location['lon']]
