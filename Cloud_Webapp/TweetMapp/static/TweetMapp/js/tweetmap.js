@@ -1,4 +1,24 @@
 var map;
+var markers = [];
+var markerCluster;
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
 
 //Draw a world map
 function initMap()
@@ -26,7 +46,7 @@ function plotmap(data)
     // Create an array of alphabetical characters used to label the markers.
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    var markers = locations.map(function(location, i) {
+    markers = locations.map(function(location, i) {
         var marker = new google.maps.Marker({
             position: location,
             label: labels[i % labels.length],
@@ -34,14 +54,13 @@ function plotmap(data)
         });
 
         //add listener
-        marker.addListener('click', function()
-            {
-                fetch_tweet(marker);
-            });
+        marker.addListener('click', function(){
+            fetch_tweet(marker);
+        });
         return marker;
     });
 
-    var markerCluster = new MarkerClusterer(map, markers,
+    markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 
@@ -60,26 +79,41 @@ function wordsearch(query_string)
 }
 
 // Trigger default search if map has loaded
-window.onload = wordsearch(null); 
+window.onload = wordsearch(null);
+
+
+//Call every 5 seconds
+window.setInterval(function(){
+  // call your function here
+  query_string = $('#search-box').val();
+  //remove markers
+  deleteMarkers();
+  //remove clusters
+  markerCluster.clearMarkers();
+  //perform new search
+  wordsearch(query_string);
+}, 5000);
 
 //trigger on click
 $('#search-button').click(function(){
 
     // new map for new search
-    initMap();
+    deleteMarkers();
+    markerCluster.clearMarkers();
     var query_string = $('#search-box').val();
     wordsearch(query_string);
 });
+
 
 //Display tweet
 function fetch_tweet(marker)
 {
     $.get("fetchtweet", {id: marker.id})
     .done(function(data){
+        // Display Tweet in a window near marker
         var infowindow = new google.maps.InfoWindow({
           content: data,
-          maxWidth: 200,
-          wrap: true
+          maxWidth: 200
         });
         infowindow.open(map, marker)
     })
