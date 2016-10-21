@@ -90,9 +90,12 @@ window.setInterval(function(){
   deleteMarkers();
   //remove clusters
   markerCluster.clearMarkers();
+  //reset map view to default center
+  // map.setCenter({lat: 15, lng: -10});
+  // map.setZoom(3);
   //perform new search
   wordsearch(query_string);
-}, 5000);
+}, 10000);
 
 //trigger on click
 $('#search-button').click(function(){
