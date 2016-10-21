@@ -38,8 +38,26 @@ es = Elasticsearch(hosts=[{'host': ES_NODE, 'port': 443}],
 
 @require_GET
 def index(request):
-	#return HttpResponse("Welcome to Tweet-Mapp, Embed a Map here")
-	return render(request, 'TweetMapp/index.html')
+    '''
+        Welcome page
+    '''
+    return render(request, 'TweetMapp/index.html')
+
+@require_GET
+def fetchtweet(request):
+    '''
+        Fetch Tweet by id
+    '''
+    tweet_id = request.GET['id']
+    tweet = 'Tweet Not Found !!!'
+
+    try:
+        result = es.get(index="tweetmap", id=tweet_id)
+        tweet = result['_source']['text']
+    except Exception as e:
+        print e
+    
+    return HttpResponse(tweet, content_type="text/plain")
 
 
 @require_GET
@@ -53,14 +71,24 @@ def wordsearch(request):
 
     # Empty string treated as match_all
     query_str = str(request.GET['query'])
-    if query_str == '':
-        query_str = '.*'
-    query = {'regexp': {'text':query_str}}
+
+    # Query DSL for elastic search
+    query = {'match': 
+                {'text':{
+                    'query':query_str,
+                    'zero_terms_query': "all"
+                    }
+                }
+            }
     
     result = es.search(index="tweetmap", filter_path=['hits.hits._id', 'hits.hits._source.location'], size=10000, body={"query": query})
 
-    for hit in result['hits']['hits']:
-        location = hit['_source']['location']
-        tweets[hit['_id']] = [location['lat'], location['lon']]
+    try:
+        for hit in result['hits']['hits']:
+            location = hit['_source']['location']
+            tweets[hit['_id']] = [location['lat'], location['lon']]
+
+    except KeyError:
+        print "No Results found"
 
     return HttpResponse(json.dumps(tweets), content_type="application/json")
