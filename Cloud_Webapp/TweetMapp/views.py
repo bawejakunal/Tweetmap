@@ -49,11 +49,18 @@ def wordsearch(request):
         returns list of {"id":[lat, lng]} mappings
     '''
     tweets = dict()
-    if request.GET['query'] == '':
-        # query elasticsearch
-        result = es.search(index="tweetmap", size=10000, body={"query": {"match_all": {}}})
-        for hit in result['hits']['hits']:
-            location = hit['_source']['location']
-            tweets[hit['_id']] = [location['lat'], location['lon']]
+    query = dict()
+
+    # Empty string treated as match_all
+    query_str = str(request.GET['query'])
+    if query_str == '':
+        query_str = '.*'
+    query = {'regexp': {'text':query_str}}
+    
+    result = es.search(index="tweetmap", filter_path=['hits.hits._id', 'hits.hits._source.location'], size=10000, body={"query": query})
+
+    for hit in result['hits']['hits']:
+        location = hit['_source']['location']
+        tweets[hit['_id']] = [location['lat'], location['lon']]
 
     return HttpResponse(json.dumps(tweets), content_type="application/json")

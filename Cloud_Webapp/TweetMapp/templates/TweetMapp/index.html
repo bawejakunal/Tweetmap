@@ -1,19 +1,41 @@
+<!--
+    Kunal Baweja kb2896
+    Dhruv Shekhawat 
+    COMS E6998 Cloud Computing and Big Data
+-->
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      html, body, #map {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-      }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'TweetMapp/css/tweetmap.css' %}">
+    <!--Normalize.css-->
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
-    {% load static %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Search Tweets" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="map"></div>
-    <script src="{% static 'TweetMapp/tweetmap.js' %}"></script>
+    <script src="{% static 'TweetMapp/js/tweetmap.js' %}"></script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMsOks6P3luxGWfPdgC75ULLh1gGEpHU0&callback=initMap"></script>
