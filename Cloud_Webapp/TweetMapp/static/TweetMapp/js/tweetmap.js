@@ -28,6 +28,11 @@ function initMap()
     zoom: 3,
     center: {lat: 15, lng: -10}
   });
+
+  //add listener to map
+  map.addListener('click', function(event){
+        geosearch(event);
+  });
 }
 
 //plot points on map
@@ -118,6 +123,27 @@ function fetch_tweet(marker)
           maxWidth: 200
         });
         infowindow.open(map, marker)
+    })
+    .fail(function(error){
+        console.log(error);
+    });
+}
+
+//show location of click event
+function geosearch(event)
+{
+    coordinates = {
+        "lat": event.latLng.lat(),
+        "lng": event.latLng.lng()
+    }
+
+    $.getJSON("geosearch", coordinates)
+    .done(function(data){
+      //remove markers
+      deleteMarkers();
+      //remove clusters
+      markerCluster.clearMarkers();
+        plotmap(data);
     })
     .fail(function(error){
         console.log(error);
