@@ -64,7 +64,7 @@ class StreamListener(tweepy.StreamListener):
 
                 es.create(index="tweetmap",
                           doc_type="tweet", id=json_data['id'],
-                          body=document, ttl="2m")
+                          body=document, ttl="1d")
 
         except (KeyError, UnicodeDecodeError, Exception) as e:
             pass
@@ -84,17 +84,19 @@ def create_index():
     """
     mappings = '''
     {
-        "tweet":{
-            "_ttl":{
-                "enabled": true,
-                "default": "2m"
-            },
-            "properties": {
-                "text":{
-                    "type": "string"
+        "mappings":{
+            "tweet":{
+                "_ttl":{
+                    "enabled": true,
+                    "default": "1d"
                 },
-                "location":{
-                    "type": "geo_point"
+                "properties": {
+                    "text":{
+                        "type": "string"
+                    },
+                    "location":{
+                        "type": "geo_point"
+                    }
                 }
             }
         }
