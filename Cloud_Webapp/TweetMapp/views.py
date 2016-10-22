@@ -59,6 +59,41 @@ def fetchtweet(request):
     
     return HttpResponse(tweet, content_type="text/plain")
 
+@require_GET
+def geosearch(request):
+    '''
+        Get tweets by geo search
+    '''
+    tweets = dict()
+    query = {
+        "filtered":{
+            "query":{
+                "match_all": {}
+            },
+            "filter":{
+                "geo_distance": {
+                "distance": "1000miles",
+                "location": {
+                    "lat": request.GET['lat'],
+                    "lon": request.GET['lng']
+                }
+                }
+            }
+        }
+    }
+
+    result = es.search(index="tweetmap", filter_path=['hits.hits._id', 'hits.hits._source.location'], size=10000, body={"query": query})
+
+    try:
+        for hit in result['hits']['hits']:
+            location = hit['_source']['location']
+            tweets[hit['_id']] = [location['lat'], location['lon']]
+
+    except KeyError:
+        print "No Results found"
+
+    return HttpResponse(json.dumps(tweets), content_type="application/json")
+
 
 @require_GET
 def wordsearch(request):
