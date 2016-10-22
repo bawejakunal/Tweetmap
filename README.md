@@ -1,6 +1,6 @@
 # Tweetmap
 
-<a href=http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com/>10K Tweets - Geovisualization of Real-Time Twitter Datas</a>
+<a href=http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com/>10K Tweets - Geovisualization of Real-Time Twitter Data</a>
 
 
 We have built a simple web application that maps tweets to their location in real time. We used <a href=http://www.tweepy.org/> Tweepy</a>, which is an easy-to-use Python library for accessing the Twitter API. Initially, we pull ten thousand tweets and store them on the <a href= https://aws.amazon.com/elasticsearch-service/> Amazon Elasticsearch Service</a>. Elasticsearch provides the benefit of easily scaling our clusters through single API calls or the management console. Furthermore, it can automatically replace failed Elasticsearch nodes, reducing the overhead associated with self-managed infrastructure like ours. 
