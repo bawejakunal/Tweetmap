@@ -90,9 +90,6 @@ window.setInterval(function(){
   deleteMarkers();
   //remove clusters
   markerCluster.clearMarkers();
-  //reset map view to default center
-  // map.setCenter({lat: 15, lng: -10});
-  // map.setZoom(3);
   //perform new search
   wordsearch(query_string);
 }, 10000);
@@ -103,6 +100,8 @@ $('#search-button').click(function(){
     // new map for new search
     deleteMarkers();
     markerCluster.clearMarkers();
+    map.setCenter({lat: 15, lng: -10});
+    map.setZoom(3);
     var query_string = $('#search-box').val();
     wordsearch(query_string);
 });
