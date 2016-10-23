@@ -115,7 +115,8 @@ def main():
     stream_listener = StreamListener()
     while True:
         try:
-            streamer = tweepy.Stream(twitter_api.auth, listener=stream_listener)
+            streamer = tweepy.Stream(twitter_api.auth,
+                listener=stream_listener)
             streamer.filter(locations=[-180, -90, 180, 90], languages=['en'])
         except Exception as e:
             print e
