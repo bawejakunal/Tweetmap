@@ -75,7 +75,7 @@ class StreamListener(tweepy.StreamListener):
         """
         if status_code == 420:
             print "YOU ARE BEING RATE LIMITED"
-            return False  #Disconnect stream
+            return True  #Do not disconnect stream
 
 
 def create_index():
@@ -113,12 +113,13 @@ def main():
     """
     create_index()
     stream_listener = StreamListener()
-    try:
-        streamer = tweepy.Stream(twitter_api.auth, listener=stream_listener)
-        streamer.filter(locations=[-180, -90, 180, 90], languages=['en'])
-    except Exception as e:
-        print e
-        raise Exception(e)
+    while True:
+        try:
+            streamer = tweepy.Stream(twitter_api.auth, listener=stream_listener)
+            streamer.filter(locations=[-180, -90, 180, 90], languages=['en'])
+        except Exception as e:
+            print e
+        # raise Exception(e)
     # Ideally we should try catch exception here
     # but we put a hack to throw outside program which is catched by our bash script to restart the script
 
