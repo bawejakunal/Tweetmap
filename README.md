@@ -26,6 +26,7 @@ A simple web application that does the following:
 6. Read [requirements.txt](requirements.txt) for further details.
 
 **Description**
+
 This simple project captures all geotagged tweets from the twitter streaming API and stores them in our elasticsearch instance deployed in the AWS cloud infrastructure. For indexing tweets into elasticsearch domain we store three main fields from the tweet data that we get from twitter streaming API:
 
 1. Tweet ID
