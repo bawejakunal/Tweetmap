@@ -1,13 +1,38 @@
-# Tweetmap
+#Tweetmap
 
-<a href=http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com/>10K Tweets - Geovisualization of Real-Time Twitter Data</a>
+[10K Tweets - Geovisualization of Real-Time Twitter Data](http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com)
 
+**Deployment URL**: [http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com](http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com)
 
-We have built a simple web application that maps tweets to their location in real time. We used <a href=http://www.tweepy.org/> Tweepy</a>, which is an easy-to-use Python library for accessing the Twitter API. Initially, we pull ten thousand tweets and store them on the <a href= https://aws.amazon.com/elasticsearch-service/> Amazon Elasticsearch Service</a>. Elasticsearch provides the benefit of easily scaling our clusters through single API calls or the management console. Furthermore, it can automatically replace failed Elasticsearch nodes, reducing the overhead associated with self-managed infrastructure like ours. 
+**About**
+A simple web application that does the following:
+1. Visualizes upto 10,000 tweets on world map in real time using their geolocation data.
+2. Search tweets by keywords
+3. Geospatial search - click on a point in map to see all tweets originating from a 1000 mile radius around the point.
 
+**Dependencies**
+1. [Tweepy v3.5.0](http://www.tweepy.org/) - a python library to connect and use [Twitter API](https://dev.t. witter.com/)
+2. [AWS Elasticsearch v2.3](https://aws.amazon.com/elasticsearch-service/) - store and analyze tweets to enable realtime search and mapping
+3. [Google Maps v3.0 API](https://developers.google.com/maps/documentation/javascript/reference) - display world map and use markers to plot tweets
+4. [ElasticSearch Python Client](https://elasticsearch-py.readthedocs.io) - connect to elasticsearch server node programatically
+5. [AWS4Auth](https://pypi.python.org/pypi/requests-aws4auth) - handle user authentication via OAuth2 protocol for using AWS services
+6. Read [requirements.txt](requirements.txt) for further details.
 
-Our application is built using <a href=https://www.djangoproject.com/Django> Django</a> which is a powerful Python Web framework. We have utilized the Google Maps API for plotting the tweet clusters. On the server-side, we pull tweet information using Tweepy and store them in Elasticsearch. Then we query Elasticsearch every 5 seconds in order to obtain new tweet/location data in the Json format. We render this data on the client-side in the form of markers that appear and disappear in real time. At any point of time, the map contains atmost 10K tweets. This limitation follows from the fact that Elasticsearch only allows a maximum of 10K tweets to be stored at any given time. We deploy our application on top of <a href = http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.html>AWS Elastic Beanstalk</a> which does an excellent job, handling details such as load balancing, scaling, and application monitoring. 
+**Description**
+This simple project captures all geotagged tweets from the twitter streaming API and stores them in our elasticsearch instance deployed in the AWS cloud infrastructure. For indexing tweets into elasticsearch domain we store three main fields from the tweet data that we get from twitter streaming API;
+1. Tweet ID
+2. Tweet text (actual content of tweet)
+3. Tweet geolocation (latitude and longitude)
+Our front page for visualization is served from a simple [django server](https://www.djangoproject.com/Django) application deployed in an auto-scaling environment of AWS Elasticbeanstalk, which provides easy scaling for our application in case of changes in traffic, both scaling up and scaling down the required resources.
 
+**Using 10K Tweets**
+1. Visit [http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com](http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com)
+2. Click any point on the map to view all tweets from 1000 mile radius of that point.
+3. Search your favourite keywords in the search box to visualize relevant tweets on the world map.
+4. Click on a map marker to view the tweet content
+5. The map is refreshed every 10 seconds to display latest tweets relevant to the keywords tracked via search box
 
-##Usage:
-Tweets can be filtered using keywords which are typed into a textbox. We've used <a href=http://www.w3schools.com/bootstrap/bootstrap_get_started.asp>Bootstrap</a>, a front-end framework that easily creates responsive designs like buttons, forms etc. In addition, we use JQuery AJAX methods for exchanging (tweet/loc) Json data with the server, and for updating only specific parts of the web page. The markers indicate locations from where the tweets were posted. If we click on a marker, it displays real-time tweets in the form of strings. Moreover, if we click anywhere on the map, all the tweet clusters within thousand miles of our click location are displayed. This allows for a granular data visualization which can lead to an improved region-based analysis. The webpage refreshes every 5 seconds in order to plot new tweets in real time.
+**Details for newbies**
+This application is built using [Django](https://www.djangoproject.com/Django) which is a powerful Python Web framework. We have utilized the Google Maps API v3.0(https://developers.google.com/maps/documentation/javascript/reference) for plotting the tweet clusters. On the server-side, we pull tweet information using [Tweepy](http://www.tweepy.org/) and store them in [AWS Elasticsearch](https://aws.amazon.com/elasticsearch-service/) server. Then we query [AWS Elasticsearch](https://aws.amazon.com/elasticsearch-service/) every 10 seconds in order to obtain new tweet/location data in the JSON format. We render this data on the client-side in the form of markers that appear and disappear on the map in real time. At any point of time, the map contains at most 10K tweets. This limitation follows from the fact that pulling too much data into browser makes the browser busy and hangs up the view, which we can further optimize in the future iterations of this project.
+
+We deploy our application on top of [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) which does an excellent job, handling details such as load balancing, scaling, and application monitoring automagically.
