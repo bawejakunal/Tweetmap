@@ -2,7 +2,7 @@
 
 [10K Tweets - Geovisualization of Real-Time Twitter Data](http://cloudwebapp-env.zrsgmaburw.us-west-2.elasticbeanstalk.com/)
 
-**Deployment URL**: [http://tenk-env.33qgpym9us.us-west-2.elasticbeanstalk.com](http://cloudwebapp-env.zrsgmaburw.us-west-2.elasticbeanstalk.com/)
+**Deployment URL**: [http://cloudwebapp-env.zrsgmaburw.us-west-2.elasticbeanstalk.com/](http://cloudwebapp-env.zrsgmaburw.us-west-2.elasticbeanstalk.com/)
 
 **About**
 
