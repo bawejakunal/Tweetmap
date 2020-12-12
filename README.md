@@ -13,7 +13,7 @@ A simple web application that does the following:
 
 **Dependencies**
 
-1. [Tweepy v3.5.0](http://www.tweepy.org/) - a python library to connect and use [Twitter API](https://dev.t. witter.com/)
+1. [Tweepy v3.5.0](http://www.tweepy.org/) - a python library to connect and use [Twitter API](https://dev.twitter.com/)
 
 2. [AWS Elasticsearch v2.3](https://aws.amazon.com/elasticsearch-service/) - store and analyze tweets to enable realtime search and mapping
 
